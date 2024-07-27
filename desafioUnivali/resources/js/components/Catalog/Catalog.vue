@@ -5,8 +5,17 @@
 </script>
 
 <template>
-    <input type="text" v-model="otherName"/>
+    <div>
+        ALOO
+    </div>
 
-
-    {{otherName}}
 </template>
+
+<style scoped>
+    div
+    {   
+        position: fixed;
+        right:0;
+        border: 10rem red solid;
+    }
+</style>

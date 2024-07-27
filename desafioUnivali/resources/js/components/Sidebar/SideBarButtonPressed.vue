@@ -1,7 +1,7 @@
 <template>
     <div  class="sidebar_item">
         <img v-bind:src="getImageUrl()" :alt="props.altText"/>
-        <a :href=props.hrefOutput>{{ props.insideText }}</a>
+        <span>{{ props.insideText }}</span>
     </div>
 </template>
 
@@ -39,27 +39,31 @@ function getImageUrl() {
 <style scoped>
     .sidebar_item
     {
-        position:relative;
-        border: 1px red solid;
-        border-radius: 1em;
-        margin: 5px;
-        padding: 10px;
-        width: 6em;
+        position: relative;
+        background-color: #15A4F4;
+        width: 100%;
+        height:2rem;
+        margin-top: 1rem;
         
     }
 
-    .sidebar_item > a 
+    .sidebar_item > span
     {
+        padding-left: 2rem;
         font-size: 22px;
-        text-decoration: none; /* no underline */
         color: black;
-        margin-left: 0em;
+        margin-left: auto;
+        margin-top:auto;
+        width: 0%;
+        color:white;
     }
 
     .sidebar_item > img 
     {
-        width: 20px;
-        /*padding: 5px 40px 0px 0px ;*/
+        width: 1.2rem;
+        left:0;
+        margin-top:0.2rem;
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
 
     }
 </style>

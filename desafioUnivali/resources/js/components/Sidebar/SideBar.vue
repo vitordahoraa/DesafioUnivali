@@ -3,16 +3,13 @@
     import SideBarButton from './SideBarButton.vue'
     import SideBarButtonPressed from './SideBarButtonPressed.vue'
 
-    let buttonBackgroundCatalog = ref(false);
-
-    function changeBackground(){
-        buttonBackground.value = !buttonBackground.value;
-        console.log(buttonBackground.value);
-    }
+    let buttonPressed = ref('catalog');
 
     const catalogComponent = shallowRef(SideBarButton)
     const catalogComponentPressed = shallowRef(SideBarButtonPressed)
+
     const registerComponent = shallowRef(SideBarButton)
+    const registerComponentPressed = shallowRef(SideBarButtonPressed)
 
 
 
@@ -24,14 +21,15 @@
         
             <Transition name="catalogTransition">
 
-                <component v-if="buttonBackgroundCatalog" @click="buttonBackgroundCatalog = !buttonBackgroundCatalog" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
-                <component v-else-if="!buttonBackgroundCatalog" @click="buttonBackgroundCatalog = !buttonBackgroundCatalog" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog'" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog'" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
         
             <Transition name="itemTransition">
                 
-               <component :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register'" :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register'" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
                
             </Transition>
         
@@ -44,9 +42,11 @@
     {
         border: 1px #15A4F4 solid;
         width: 10rem;
-        height: 20rem;
+        height: 100%;
         position: fixed;
-        padding: 10px;
+        left:0;
+        top:0;
+        background-color: #FAFAFA;
         align-items: center;
         text-align: center;
     }
@@ -60,8 +60,27 @@
 
     #itens
     {   
-        display:grid;
-        padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
+        
+    .catalogTransition-enter-active,
+    .catalogTransition-leave-active {
+    transition: all 0.25s ease-out;
+    }
+
+    .catalogTransition-enter-from {
+    opacity: 0;
+    transform: translateX(-30px);
+    position:absolute;
+    }
+
+    .catalogTransition-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+    position:absolute;
     }
 
 </style>

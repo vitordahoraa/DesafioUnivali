@@ -7,7 +7,7 @@ import SideBar from './components/Sidebar/SideBar.vue'
 
 const app = createApp();
 
-app.component('catalogo',Catalogo)
+app.component('catalog',Catalogo)
 app.component('sidebar',SideBar)
 
 app.mount('#app')

@@ -3,5 +3,5 @@
 @section('content')
     <sidebar />
 
-    <catalogo />
+    <catalog/>
 @endsection
