@@ -8,5 +8,5 @@
 </script>
 
 <template>
-    <component :is="sideBarComponent"></component>
+    <SideBar></SideBar>
 </template>

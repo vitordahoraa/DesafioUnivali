@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('listagem');
+    return view('master');
 });
 
 Route::get('/item', function () {

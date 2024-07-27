@@ -1,10 +1,10 @@
 <template>
-    <a :href="hrefOutput">
-        <div  class="sidebar_item">
+    <router-link id="router-link" :to="hrefOutput">
+        <div class="sidebar_item">
             <img v-bind:src="getImageUrl()" :alt="props.altText"/>
             <span>{{ props.insideText }}</span>
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script setup>
@@ -39,6 +39,12 @@ function getImageUrl() {
 </script>
 
 <style scoped>
+
+    #router-link
+    {
+        text-decoration: none; 
+        color: inherit;
+    }
     .sidebar_item
     {
         position: relative;

@@ -1,8 +1,10 @@
 <template>
-    <div  class="sidebar_item">
-        <img v-bind:src="getImageUrl()" :alt="props.altText"/>
-        <span>{{ props.insideText }}</span>
-    </div>
+    <router-link :to="hrefOutput">
+        <div  class="sidebar_item">
+            <img v-bind:src="getImageUrl()" :alt="props.altText"/>
+            <span>{{ props.insideText }}</span>
+        </div>
+    </router-link>  
 </template>
 
 <script setup>

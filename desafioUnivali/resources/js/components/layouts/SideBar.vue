@@ -1,7 +1,7 @@
 <script setup>
     import {ref, shallowRef} from 'vue'
-    import SideBarButton from './SideBarButton.vue'
-    import SideBarButtonPressed from './SideBarButtonPressed.vue'
+    import SideBarButton from '../Sidebar/SideBarButton.vue'
+    import SideBarButtonPressed from '../Sidebar/SideBarButtonPressed.vue'
 
     const buttonPressed = ref('catalog');
 
@@ -24,7 +24,7 @@
             <!--  Essa Transition intercala entre o butão selecionado e não selecionado-->
             <Transition name="catalogTransition">
 
-                <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponent" insideText="Listagem" hrefOutput="/" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
                 <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
