@@ -3,7 +3,7 @@
     import SideBarButton from './SideBarButton.vue'
     import SideBarButtonPressed from './SideBarButtonPressed.vue'
 
-    let buttonPressed = ref('catalog');
+    const buttonPressed = ref('catalog');
 
     const catalogComponent = shallowRef(SideBarButton)
     const catalogComponentPressed = shallowRef(SideBarButtonPressed)
@@ -11,25 +11,28 @@
     const registerComponent = shallowRef(SideBarButton)
     const registerComponentPressed = shallowRef(SideBarButtonPressed)
 
-
-
+    defineExpose({
+        buttonPressed
+    })
 </script>
+<!-- Template para a barra lateral cujo usuário interage -->
 <template>
     <div class="sidebar">
         <h2>Desafio Univali</h2>
         <div id="itens">
-        
+            
+            <!--  Essa Transition intercala entre o butão selecionado e não selecionado-->
             <Transition name="catalogTransition">
 
-                <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog'" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
-                <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog'" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
         
             <Transition name="itemTransition">
                 
-                <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register'" :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
-                <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register'" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
                
             </Transition>
         

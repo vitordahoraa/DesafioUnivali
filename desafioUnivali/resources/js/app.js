@@ -1,13 +1,21 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
-import Catalogo from './components/Catalog/Catalog.vue'
-import SideBar from './components/Sidebar/SideBar.vue'
+import contentComponent from './components/contentComponent/contentComponent.vue'
+import Index from './Index.vue'
+
+const routes = [
+    {path: '/', component: Index},
+    {path: '/item', component: Item},
+    
+]
+
 
 const app = createApp();
 
-app.component('catalog',Catalogo)
+app.component('content-component',contentComponent)
 app.component('sidebar',SideBar)
 
 app.mount('#app')

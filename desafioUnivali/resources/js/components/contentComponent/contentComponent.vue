@@ -1,12 +1,15 @@
 <script setup>
     import {ref} from "vue";
+    
+    const buttonPressed = ref('a')
+    
 
-    const otherName = ref('')
+    const otherName = ref(buttonPressed.value)
 </script>
 
 <template>
     <div>
-        ALOO
+        ALO
     </div>
 
 </template>
