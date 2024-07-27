@@ -1,6 +1,6 @@
 <template>
     <div  class="sidebar_item">
-        <img class="NotPressed"  v-bind:src="getImageUrl()" :alt="props.altText"/>
+        <img v-bind:src="getImageUrl()" :alt="props.altText"/>
         <a :href=props.hrefOutput>{{ props.insideText }}</a>
     </div>
 </template>
@@ -40,10 +40,12 @@ function getImageUrl() {
     .sidebar_item
     {
         position:relative;
+        border: 1px red solid;
         border-radius: 1em;
         margin: 5px;
         padding: 10px;
         width: 6em;
+        
     }
 
     .sidebar_item > a 
@@ -57,7 +59,6 @@ function getImageUrl() {
     .sidebar_item > img 
     {
         width: 20px;
-        color:white;
         /*padding: 5px 40px 0px 0px ;*/
 
     }

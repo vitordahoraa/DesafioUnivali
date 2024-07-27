@@ -1,8 +1,9 @@
 <script setup>
     import {ref, shallowRef} from 'vue'
     import SideBarButton from './SideBarButton.vue'
+    import SideBarButtonPressed from './SideBarButtonPressed.vue'
 
-    let buttonBackground = ref(false);
+    let buttonBackgroundCatalog = ref(false);
 
     function changeBackground(){
         buttonBackground.value = !buttonBackground.value;
@@ -10,6 +11,8 @@
     }
 
     const catalogComponent = shallowRef(SideBarButton)
+    const catalogComponentPressed = shallowRef(SideBarButtonPressed)
+    const registerComponent = shallowRef(SideBarButton)
 
 
 
@@ -21,17 +24,15 @@
         
             <Transition name="catalogTransition">
 
-               <component :is="catalogComponent"></component>
+                <component v-if="buttonBackgroundCatalog" @click="buttonBackgroundCatalog = !buttonBackgroundCatalog" :is="catalogComponent" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-else-if="!buttonBackgroundCatalog" @click="buttonBackgroundCatalog = !buttonBackgroundCatalog" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
         
             <Transition name="itemTransition">
-              
-                <div class="sidebar_item">
-                    <img src = "../../../svg/register-svgrepo-com.svg" alt="Register"/>
-                    <a id="item"href="/item">Cadastro</a>
-                </div>
-            
+                
+               <component :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+               
             </Transition>
         
         </div>
@@ -63,29 +64,4 @@
         padding: 10px;
     }
 
-    .sidebar_item
-    {
-        position:relative;
-        border: 1px red solid;
-        border-radius: 1em;
-        margin: 5px;
-        padding: 10px;
-        width: 6em;
-        
-    }
-
-    .sidebar_item > a 
-    {
-        font-size: 22px;
-        text-decoration: none; /* no underline */
-        color: black;
-        margin-left: 0em;
-    }
-
-    .sidebar_item > img 
-    {
-        width: 20px;
-        /*padding: 5px 40px 0px 0px ;*/
-
-    }
 </style>
