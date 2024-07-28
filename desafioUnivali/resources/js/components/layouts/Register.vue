@@ -1,6 +1,10 @@
 <script setup>
     import {ref} from 'vue'
+    import Field from "../item/TextField.vue"
+    import CurrencyField from "../item/CurrencyField.vue"
     import DropDown from "../item/Dropdown.vue"
+    import CheckBox from "../item/CheckBoxField.vue"
+    import DateField from "../item/DateField.vue"
 
     const options = ref(['Litro','Kilograma','Unidade'])
     
@@ -15,6 +19,29 @@
     const data_vencimento = ref(null)
 
     const data_fabricacao = ref(null)
+    
+    const name = ref(null)
+
+    const createItemJson = () => {
+        return {
+            'id' : Math.floor(Math.random() * 9999),
+            'name' : name.value
+        }
+    }
+
+    const saveToLocalStorage = () => {
+        let item = createItemJson()
+
+        console.log(item)
+        let storedItens = localStorage.getItem('listOfItemsDesafioUnivali')
+        if(storedItens == null)
+        {
+            let newArrayOfItens = [
+                
+            ]
+        }
+        //localStorage.setItem('listOfItemsDesafioUnivali',)
+    }
 
 </script>
 
@@ -31,50 +58,32 @@
 
 <form action="/item_submit">
     <div id="fields">
-    
+        
+        <Field labelText="Nome *" v-model:value="name"></Field>
+
+
         <div id="unit-field">
             <label id="unit-label" for="unit-input">Unidade *</label>
-            <input id="unit-input" type="hidden" :value="selectedOption">
             <DropDown id="dropdown-input" :options="options" v-model="selectedOption"/>
         </div>
 
-        <div id="quantity-field">
-            <p>Quantidade</p>
-            <input class="text-field" v-model="quantidade">
-        </div>
+        <Field labelText="Quantidade" v-model:value="quantidade"></Field>
+
         
-        <div id="money-info">
-            
-            <div id="currency-field">
-                <p>Moeda *</p>
-                <input class="text-field currency-input" required v-model="initialCurrency">
-            </div>
-            <div id="value-field">
-                <p>Valor *</p>
-                <input class="text-field money-input" required placeholder="0,00"v-model="initialValue">
-            </div>
-            
-        </div>
+        <CurrencyField labelTextCurrency="Moeda *" labelTextValue="Valor *" v-model:currency="initialCurrency" v-model:value="initialValue"></CurrencyField>
         
-        <div id="perecivel-field">
-            <p>Produto perecivel?</p>
-            <input type="checkbox" id="checkbox" v-model="isPerecivel" />
-        </div>
+        <CheckBox labelText="Item perecivel?" v-model:value="isPerecivel"></CheckBox>
         
-        <div id="dueAt-field">
-            <p>Data Vencimento {{ isPerecivel ? '*' : ''}}</p>
-            <input v-model="data_vencimento" type="date" required />
-        </div>
+        <DateField :labelText="isPerecivel ? 'Data Vencimento *' : 'Data Vencimento '" v-model:value="data_vencimento"></DateField>
         
-        <div id="madeIn-field">
-            <p>Data Fabricacao</p>
-            <input v-model="data_fabricacao" type="date" required />
-        </div>
+        <DateField labelText="Data Fabricacao" v-model:value="data_fabricacao"></DateField>
+        
+        
     </div>
     
     <div id="buttons">
 
-        <input type="submit" id="save-button" value = Salvar></input>
+        <button @click="saveToLocalStorage" id="save-button" >Salvar</button>
         
         <router-link to="/">
             <button id="cancel-button">Cancelar</button>
@@ -103,53 +112,17 @@
     {
         font-weight: normal;
     }
-    .text-field
-    {
-        width: 22rem;
-        height: 2rem;
-        display: block;
-    }
 
-    #name-input
-    {
-        margin-top: 1rem;
-    }
 
     #dropdown-input
     {
         margin-top:1rem;
     }
-    #currency-field
-    {
-        margin-right: 1rem;
-    }
-    .currency-input
-    {
-        width: 3rem;
-    }
-    .money-input
-    {
-        unicode-bidi: bidi-override;
-        text-align: right;
-        width: 17rem;
-    }
-    #money-info
-    {
-        display:flex;
-    }
     #unit-field 
     {
         margin:1rem 0;
     }
-    #perecivel-field
-    {
-        display:flex;
-        width:22rem;
-    }
-    #checkbox
-    {
-        margin-left: 3rem;
-    }
+    
     #save-button
     {
         background-color: #47FA44;

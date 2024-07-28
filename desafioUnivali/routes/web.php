@@ -6,7 +6,7 @@ Route::get('/', function () {
     return view('master');
 });
 
-Route::get('/item', function () {
-    return view('item');
+Route::get('/register', function () {
+    return view('master');
 });
 
