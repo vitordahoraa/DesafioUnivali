@@ -7,7 +7,7 @@
             </div>
             <div id="value-field">
                 <p>{{labelTextValue}}</p>
-                <input class="text-field money-input" required placeholder="0,00" v-model="value">
+                <input class="text-field money-input" required placeholder="0,00" v-model="value" v-maska :data-maska="'9,##'" :data-maska-tokens="'9:[0-9]:repeated|0:[0-9]:optional'" data-maska-reversed >
             </div>
             
         </div>
@@ -15,6 +15,7 @@
 
 <script setup>
     import {defineModel, defineProps, defineEmits} from 'vue';
+    import { vMaska } from "maska/vue"
 
     const valueCurrency = defineModel('currency')
     const value = defineModel('value')

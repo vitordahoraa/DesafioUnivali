@@ -1,7 +1,9 @@
 <template>
     <div id="field">
         <label id="field-label" for="field-input">{{labelText}}</label>
-        <input id="field-input" class="text-field" required v-model="value">
+        <div id="input-area">
+            <input id="field-input" class="text-field" :placeholder="placeHolderInput" v-model="value"><p>{{ complement }}</p>
+        </div>
     </div>
 </template>
 
@@ -15,7 +17,17 @@
             labelText : {
                 type : String,
                 required : true
-            }
+            },
+            
+            placeHolderInput : {
+                type : String,
+                required : false
+            },
+            complement : {
+                type : String,
+                required : false
+            },
+            
         }
     )
 
@@ -34,6 +46,18 @@
     #field-input
     {
         margin-top: 1rem;
+    }
+    #input-area
+    {
+        display:flex;
+        text-align: center;
+    }
+    
+    #input-area > p
+    {
+        margin-top: 2rem;
+        margin-bottom: 0rem;
+        margin-left: 0.6rem;
     }
 
 </style>

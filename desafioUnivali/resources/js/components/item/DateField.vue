@@ -1,7 +1,7 @@
 <template>
     <div id="date-field">
         <p>{{ labelText }}</p>
-        <input v-model="value" type="date" required />
+        <input v-model="value" type="date"/>
     </div>
 </template>
 
