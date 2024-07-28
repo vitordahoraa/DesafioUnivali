@@ -1,10 +1,18 @@
 <script setup>
+
+    //importação das libs e dos componentes
     import {ref, watch} from 'vue'
     import Field from "../item/TextField.vue"
     import CurrencyField from "../item/CurrencyField.vue"
     import DropDown from "../item/Dropdown.vue"
     import CheckBox from "../item/CheckBoxField.vue"
     import DateField from "../item/DateField.vue"
+    import { useRouter } from 'vue-router';
+    
+
+    //Definição das constantes utilizadas
+    const router = useRouter()
+    
 
     const options = ref(['Litro','Kilograma','Unidade'])
     
@@ -27,23 +35,26 @@
     const quantidade = ref(null)
 
     
-    // Function to Add days to current date
+    // Função que adiciona dias para uma data
     function addDays(date, days) {
         const newDate = new Date(date);
         newDate.setDate(date.getDate() + days);
         return newDate;
     }
 
+    //Função que converte uma string em 'dd/MM/yyyy' para uma var Date
     const convertStringToDate = (date) => {
         let splitDate = date.split('/')
 
         return new Date(splitDate[2], splitDate[1] - 1 ,splitDate[0])
     }
 
+    //Cria o json do item baseado no formulário
     const createItemJson = () => {
         const formatter = new Intl.DateTimeFormat('pt-br', {dateStyle: 'short'}); 
         return {
-            'id' : Math.floor(Math.random() * 9999),
+            //ID é um numero aleatório entre 0 e 10000, para não ter que implementar um sistema de identificação com localstorage
+            'id' : Math.floor(Math.random() * 99999),
             'name' : name.value,
             'unit' : selectedOption.value,
             'quantidade' : quantidade.value,
@@ -55,7 +66,9 @@
         }
     }
 
+    //Função que valida a quantidade baseado na unidade
     const validateQuantidade = (item) => {
+        //Quantidade não deve ter caracteres diferentes de números e virgulas, e no máximo 1 virgula
         if(!/^[0-9|,]+$/.test(item.quantidade) || item.quantidade.split(',').length > 2 ){
             window.alert('Quantidade deve apenas possuir numeros')
             return false
@@ -88,6 +101,7 @@
         
     }
 
+    //Função responsável por validar o item
     const validateItem = (item) =>
     {   
         //Removendo pontos da quantidae, caso o usuário tenha inserido
@@ -131,23 +145,23 @@
             return false
         }
         
+        //Valida as regras da quantidade
         if(!validateQuantidade(item)){
             return false
         }
         
+        //Verifica se a data de vencimento é menor que a atual
         if(convertStringToDate(item.data_vencimento) < dataAtual){
             window.alert('Item vencido')
             return false
         }
 
+        //Verifica se a data de vencimento é menor que a data de fabricação, caso seja perecivel
         if(convertStringToDate(item.data_vencimento) < convertStringToDate(item.data_fabricacao) && item.isPerecivel){
             
             window.alert('Item perecivel e com data de fabricacao maior que vencimento')
             return false
         }
-
-
-
 
         return true
     }
@@ -170,10 +184,14 @@
                 ArrayOfItens = JSON.parse(storedItens)            
             }
             ArrayOfItens.push(item)
-            //localStorage.setItem('listOfItemsDesafioUnivali',JSON.stringify(ArrayOfItens))
+            localStorage.setItem('listOfItemsDesafioUnivali',JSON.stringify(ArrayOfItens))
+
+            window.alert('Item adicionado com sucesso')
+            router.push('/')
         }
     }
 
+    //Função que determina os valores complementares da quantidade baseado na unidade
     const quantidadeOnUnit = () =>{
         switch(selectedOption.value) {
             case 'Unidade':
@@ -194,6 +212,7 @@
         }
     }
 
+    //Vigia a unidade selecionada para alterar os valores de quantidade
     watch(selectedOption,quantidadeOnUnit)
 </script>
 
@@ -225,11 +244,13 @@
         <CurrencyField labelTextCurrency="Moeda *" labelTextValue="Valor *" v-model:currency="Currency" v-model:value="Value"></CurrencyField>
         
         <CheckBox labelText="Item perecivel?" v-model:value="isPerecivel"></CheckBox>
+        <div id="DateFields">
+            
+            <DateField id="dueAtField" :labelText="isPerecivel ? 'Data Vencimento *' : 'Data Vencimento '" v-model:value="data_vencimento"></DateField>
+            
+            <DateField labelText="Data Fabricacao *" v-model:value="data_fabricacao"></DateField>
         
-        <DateField :labelText="isPerecivel ? 'Data Vencimento *' : 'Data Vencimento '" v-model:value="data_vencimento"></DateField>
-        
-        <DateField labelText="Data Fabricacao *" v-model:value="data_fabricacao"></DateField>
-        
+        </div>
         
     </div>
     
@@ -291,6 +312,14 @@
         margin-top: 2rem;
         margin-left: 4rem;
         border-radius: 1rem;
+    }
+    #DateFields
+    {
+        display: flex;
+    }
+    #dueAtField
+    {
+        margin-right: 2rem;
     }
     
 </style>

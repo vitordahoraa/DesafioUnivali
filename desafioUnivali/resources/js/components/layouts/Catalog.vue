@@ -1,11 +1,10 @@
 <script setup>
     import {ref} from "vue";
+    import Item from '../catalog/Item.vue'
     
-    const buttonPressed = ref('a')
-    let listOfItens = localStorage.getItem('Desafio_Univali_Itens')
+    let listOfItens = JSON.parse(localStorage.getItem('listOfItemsDesafioUnivali'))
     
 
-    const otherName = ref(buttonPressed.value)
 </script>
 
 <template>
@@ -16,7 +15,9 @@
             <h2>Lista com todos os itens salvos</h2>
         </div>
         <hr />
-
+        <Item v-for="item in listOfItens" :key="item.id" :name="item.name" :dataValidade="item.data_vencimento" :isPerecivel="item.isPerecivel" :dataFabricacao="item.data_fabricacao" :quantidade="item.quantidade" :valorUnitario="item.valor" :moeda="item.moeda"></Item>
+    
+    
     </div>
 
 </template>
