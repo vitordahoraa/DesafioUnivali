@@ -94,11 +94,21 @@
                 type : String,
                 required : true
 
+            },
+            id : {
+                type : Number,
+                required : true
+
             }
             
         
         }
     )
+
+    const editItem = () =>
+    {
+        
+    } 
 
 </script>
 

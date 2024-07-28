@@ -6,7 +6,7 @@ import Register from '../components/layouts/Register.vue'
 const routes = [
     {
         path : '/',
-        component : Catalog
+        component : Catalog,
     },
     {
         path : '/register',

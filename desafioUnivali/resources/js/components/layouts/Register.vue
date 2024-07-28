@@ -1,7 +1,7 @@
 <script setup>
 
     //importação das libs e dos componentes
-    import {ref, watch} from 'vue'
+    import {ref, watch,defineProps} from 'vue'
     import Field from "../item/TextField.vue"
     import CurrencyField from "../item/CurrencyField.vue"
     import DropDown from "../item/Dropdown.vue"
@@ -9,6 +9,49 @@
     import DateField from "../item/DateField.vue"
     import { useRouter } from 'vue-router';
     
+    const props = defineProps({
+            prop_name : {
+                type : String,
+                required : false
+            },
+            prop_dataValidade : {
+                type : String,
+                default : null,
+                required : false
+
+            },
+            prop_isPericivel : {
+                type : Boolean,
+                required : false
+            },
+            prop_dataFabricacao : {
+                type : String,
+                required : false
+
+            },
+            prop_quantidade : {
+                type : String,
+                required : false
+
+            },
+            prop_valorUnitario : {
+                type : String,
+                required : false
+
+            },
+            prop_moeda : {
+                type : String,
+                default : 'BRL',
+                required : false
+
+            },
+            prop_id : {
+                type : Number,
+                required : false
+
+            }
+            
+    })
 
     //Definição das constantes utilizadas
     const router = useRouter()
@@ -18,21 +61,49 @@
     
     const selectedOption = ref(null)
 
-    const Currency = ref('BRL')
+    const Currency = ref(props.prop_moeda)
 
-    const Value = ref('')
+    const Value = ref(props.prop_valorUnitario)
 
-    const isPerecivel = ref(false) 
+    const isPerecivel = ref(props.prop_isPericivel) 
 
-    const data_vencimento = ref(null)
+    const data_vencimento = ref(props.prop_dataValidade)
 
-    const data_fabricacao = ref(null)
+    const data_fabricacao = ref(props.prop_dataFabricacao)
 
     const placeholderQuantidade = ref('')
+    
     const complementQuantidade = ref('')
     
-    const name = ref(null)
-    const quantidade = ref(null)
+    const name = ref(props.prop_name)
+
+    const quantidade = ref(props.prop_quantidade)
+
+
+
+    //Vigia a unidade selecionada para alterar os valores de quantidade
+    watch(selectedOption,() =>{ 
+        switch(selectedOption.value) {
+            case 'Unidade':
+                placeholderQuantidade.value = '0'
+                complementQuantidade.value = 'un'
+                break;
+            case 'Litro':
+                placeholderQuantidade.value =  '0,000'
+                complementQuantidade.value = 'lt'
+                break;
+            case 'Kilograma':
+                placeholderQuantidade.value =  '0,000'
+                complementQuantidade.value = 'kg'
+                break;
+            default:
+                placeholderQuantidade.value = ''
+                complementQuantidade.value = ''
+        }
+    })
+
+
+
 
     
     // Função que adiciona dias para uma data
@@ -191,29 +262,6 @@
         }
     }
 
-    //Função que determina os valores complementares da quantidade baseado na unidade
-    const quantidadeOnUnit = () =>{
-        switch(selectedOption.value) {
-            case 'Unidade':
-                placeholderQuantidade.value = '0'
-                complementQuantidade.value = 'un'
-                break;
-            case 'Litro':
-                placeholderQuantidade.value =  '0,000'
-                complementQuantidade.value = 'lt'
-                break;
-            case 'Kilograma':
-                placeholderQuantidade.value =  '0,000'
-                complementQuantidade.value = 'kg'
-                break;
-            default:
-                placeholderQuantidade.value = ''
-                complementQuantidade.value = ''
-        }
-    }
-
-    //Vigia a unidade selecionada para alterar os valores de quantidade
-    watch(selectedOption,quantidadeOnUnit)
 </script>
 
 <template>

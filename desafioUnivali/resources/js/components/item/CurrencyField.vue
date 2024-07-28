@@ -3,11 +3,11 @@
             
             <div id="currency-field">
                 <p>{{labelTextCurrency}}</p>
-                <input class="text-field currency-input" required v-model="valueCurrency">
+                <input class="text-field currency-input"  v-model="valueCurrency">
             </div>
             <div id="value-field">
                 <p>{{labelTextValue}}</p>
-                <input class="text-field money-input" required placeholder="0,00" v-model="value" v-maska :data-maska="'9,##'" :data-maska-tokens="'9:[0-9]:repeated|0:[0-9]:optional'" data-maska-reversed >
+                <input class="text-field money-input" placeholder="0,00" v-model="value" v-maska :data-maska="'9,##'" :data-maska-tokens="'9:[0-9]:repeated|0:[0-9]:optional'" data-maska-reversed >
             </div>
             
         </div>
