@@ -1,7 +1,7 @@
 <script setup>
     import {ref, shallowRef} from 'vue'
-    import SideBarButton from '../Sidebar/SideBarButton.vue'
-    import SideBarButtonPressed from '../Sidebar/SideBarButtonPressed.vue'
+    import SideBarButton from '../sidebar/SideBarButton.vue'
+    import SideBarButtonPressed from '../sidebar/SideBarButtonPressed.vue'
 
     const buttonPressed = ref('catalog');
 
@@ -25,14 +25,14 @@
             <Transition name="catalogTransition">
 
                 <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponent" insideText="Listagem" hrefOutput="/" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
-                <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/catalog" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
+                <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
         
             <Transition name="itemTransition">
                 
-                <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponent" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
-                <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/item" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponent" insideText="Cadastro" hrefOutput="/register" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
+                <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/register" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
                
             </Transition>
         

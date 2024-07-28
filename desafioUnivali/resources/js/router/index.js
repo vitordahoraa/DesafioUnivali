@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import Catalog from '../components/layouts/Catalog.vue'
-import Item from '../components/layouts/Item.vue'
+import Register from '../components/layouts/Register.vue'
 
 const routes = [
     {
@@ -9,8 +9,8 @@ const routes = [
         component : Catalog
     },
     {
-        path : '/item',
-        component : Item
+        path : '/register',
+        component : Register
     }
 ]
 
