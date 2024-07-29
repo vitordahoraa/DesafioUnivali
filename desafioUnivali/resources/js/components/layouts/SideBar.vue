@@ -12,6 +12,7 @@
     const registerComponent = shallowRef(SideBarButton)
     const registerComponentPressed = shallowRef(SideBarButtonPressed)
 
+    //Funções para abrir e fechar a barra de navegação
     const closeNav = () => {
         isCollapsed.value = false;
     }
