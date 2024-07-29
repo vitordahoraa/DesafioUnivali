@@ -57,7 +57,7 @@
     {
         unicode-bidi: bidi-override;
         text-align: right;
-        width: 17rem;
+        width: 16rem;
     }
     #money-info
     {

@@ -28,7 +28,7 @@
     #contentBody
     {
         position: absolute;
-        margin-left: 12rem;
+        margin-top: 4rem;
     }
     
     #header

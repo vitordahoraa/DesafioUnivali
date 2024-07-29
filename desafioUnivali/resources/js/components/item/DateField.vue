@@ -34,6 +34,7 @@ input{
     border: none;
     outline: none;
     border-radius: 5px;
+    width: 8rem;
 }
 ::-webkit-calendar-picker-indicator{
     background-color: #ffffff;

@@ -17,7 +17,7 @@
             </h3>
 
             <h2 class="quality-field">
-                Produto Perecivel?
+                Perecivel?
             </h2>
             <h3 class="quality-value">
                 {{isPerecivel ? 'Sim' : 'Nao'}}
@@ -156,7 +156,7 @@
         background-color: #bcd3f5;
         border-radius: 1rem;
         padding: 1rem;
-        width: 22rem;
+        width: 20rem;
         position: relative;
         display: block;
         height: 14rem;

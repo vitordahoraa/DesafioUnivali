@@ -347,7 +347,7 @@
             
             <DateField id="dueAtField" :labelText="isPerecivel ? 'Data Vencimento *' : 'Data Vencimento '" v-model:value="data_vencimento"></DateField>
             
-            <DateField labelText="Data Fabricacao *" v-model:value="data_fabricacao"></DateField>
+            <DateField id="madeAtField" labelText="Data Fabricacao *" v-model:value="data_fabricacao"></DateField>
         
         </div>
         
@@ -361,6 +361,7 @@
             <button id="cancel-button">Cancelar</button>
         </router-link>
     </div>
+    <div id="whiteSpace"></div>
 
 </div>
 
@@ -371,7 +372,7 @@
     #contentBody
     {
         position: absolute;
-        margin-left: 12rem;
+        margin-top: 4rem;
     }
     
     #header
@@ -397,7 +398,7 @@
     #save-button
     {
         background-color: #47FA44;
-        width: 10rem;
+        width: 9rem;
         height: 3rem;
         margin-top: 2rem;
         border-radius: 1rem;
@@ -408,10 +409,10 @@
     {
         
         background-color: #FF9E9E;
-        width: 10rem;
+        width: 9rem;
         height: 3rem;
         margin-top: 2rem;
-        margin-left: 4rem;
+        margin-left: 2rem;
         border-radius: 1rem;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
@@ -421,8 +422,12 @@
         display: flex;
     }
     #dueAtField
-    {
-        margin-right: 2rem;
+    {   
+        margin-right: 1rem;
     }
-    
+    #whiteSpace
+    {
+        height: 2rem;
+    }
+
 </style>

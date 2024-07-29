@@ -4,6 +4,7 @@
     import SideBarButtonPressed from '../sidebar/SideBarButtonPressed.vue'
 
     const buttonPressed = ref('');
+    const isCollapsed = ref(false);
 
     const catalogComponent = shallowRef(SideBarButton)
     const catalogComponentPressed = shallowRef(SideBarButtonPressed)
@@ -11,25 +12,30 @@
     const registerComponent = shallowRef(SideBarButton)
     const registerComponentPressed = shallowRef(SideBarButtonPressed)
 
-    defineExpose({
-        buttonPressed
-    })
+    const closeNav = () => {
+        isCollapsed.value = false;
+    }
+    
+    const openNav = () => {
+        isCollapsed.value = true;
+    }
 </script>
 <!-- Template para a barra lateral cujo usuário interage -->
 <template>
-    <div class="sidebar">
-        <h2>Desafio Univali</h2>
+    <div class="sidebar" :class="{ collapsed : isCollapsed}">
         <div id="itens">
+            <img id="closeTab" src="../../../svg/close-tab-svgrepo-com.svg" @click="closeNav"alt="closeTab">
+            <h2 id="header">Desafio Univali</h2>
             
             <!--  Essa Transition intercala entre o butão selecionado e não selecionado-->
-            <Transition name="catalogTransition">
+            <Transition name="catalogTransition" mode="out-in">
 
                 <component v-if="buttonPressed != 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponent" insideText="Listagem" hrefOutput="/" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
                 <component v-else-if="buttonPressed === 'catalog'" @click="buttonPressed = 'catalog';$emit('catalog')" :is="catalogComponentPressed" insideText="Listagem" hrefOutput="/" iconFileName="list-items-svgrepo-com.svg" altText="Listagem"></component>
 
             </Transition>
         
-            <Transition name="itemTransition">
+            <Transition name="itemTransition" mode="out-in">
                 
                 <component v-if="buttonPressed != 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponent" insideText="Cadastro" hrefOutput="/register" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
                 <component v-else-if="buttonPressed === 'register'" @click="buttonPressed = 'register';$emit('register')" :is="registerComponentPressed" insideText="Cadastro" hrefOutput="/register" iconFileName="register-svgrepo-com.svg" altText="Cadastro"></component>
@@ -38,13 +44,17 @@
         
         </div>
     </div>
+    <div id="openNav">
+        <img src="../../../svg/burger-menu-svgrepo-com.svg" @click="openNav" id="openNav"alt="menu">
+    </div>
 </template>
 
 <style scoped>
     .sidebar
     {
         border: 1px #15A4F4 solid;
-        width: 10rem;
+        z-index: 10;
+        width: 0;
         height: 100%;
         position: fixed;
         left:0;
@@ -52,6 +62,8 @@
         background-color: #FAFAFA;
         align-items: center;
         text-align: center;
+        overflow-x: hidden;
+        transition: 0.5s;
     }
     
     .sidebar > h2 
@@ -66,6 +78,28 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: 0.3s;
+    }
+    #closeTab
+    {
+        width: 2rem;
+        position: absolute;
+        right:0;
+        top: 5px;
+        cursor: pointer;
+    }
+    #openNav
+    {
+        width: 2rem;
+        position: absolute;
+        left:5px;
+        top: 5px;
+        cursor: pointer;
+        z-index: 4;
+    }
+    .collapsed
+    {
+        width: 18rem;
     }
 
         
@@ -77,13 +111,13 @@
     .catalogTransition-enter-from {
     opacity: 0;
     transform: translateX(-30px);
-    position:absolute;
+    z-index: 5;
     }
 
     .catalogTransition-leave-to {
     opacity: 0;
     transform: translateX(30px);
-    position:absolute;
+    z-index: 5;
     }
 
 </style>

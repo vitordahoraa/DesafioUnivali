@@ -38,7 +38,7 @@
     
     .text-field
     {
-        width: 22rem;
+        width: 19rem;
         height: 2rem;
         display: block;
     }
