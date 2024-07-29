@@ -33,7 +33,6 @@ function getImageUrl() {
 
   // This path must be correct for your file
   let result = "../../../svg/"+(props.iconFileName)
-  console.log(result)
   return new URL(result, import.meta.url).href
 }
 </script>

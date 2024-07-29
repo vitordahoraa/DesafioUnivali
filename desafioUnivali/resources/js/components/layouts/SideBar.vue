@@ -3,7 +3,7 @@
     import SideBarButton from '../sidebar/SideBarButton.vue'
     import SideBarButtonPressed from '../sidebar/SideBarButtonPressed.vue'
 
-    const buttonPressed = ref('catalog');
+    const buttonPressed = ref('');
 
     const catalogComponent = shallowRef(SideBarButton)
     const catalogComponentPressed = shallowRef(SideBarButtonPressed)

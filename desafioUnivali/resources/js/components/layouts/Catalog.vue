@@ -1,6 +1,8 @@
 <script setup>
-    import {ref} from "vue";
+    import { useRouter } from 'vue-router';
     import Item from '../catalog/Item.vue'
+    
+    const router = useRouter();
     
     let listOfItens = JSON.parse(localStorage.getItem('listOfItemsDesafioUnivali'))
     
@@ -13,7 +15,7 @@
         <div id="header">
             <h1>Catalogo</h1>
             <h2>Lista com todos os itens salvos</h2>
-            <button id="add-item">Adicionar item</button>
+            <button @click="router.push({name :  'register'})"id="add-item">Adicionar item</button>
         </div>
         <hr />
         <Item v-for="item in listOfItens" :key="item.id" :itemName="item.name" :dataValidade="item.data_vencimento" :isPerecivel="item.isPerecivel" :dataFabricacao="item.data_fabricacao" :quantidade="item.quantidade" :valorUnitario="item.valor" :moeda="item.moeda" :id="item.id"></Item>

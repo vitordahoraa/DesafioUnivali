@@ -13,7 +13,7 @@
                 Validade
             </h2>
             <h3 class="quality-value">
-                {{dataValidade}}
+                {{dataValidade == null ? 'Nao informada' : dataValidade}}
             </h3>
 
             <h2 class="quality-field">
@@ -36,7 +36,7 @@
                 Quantidade
             </h2>
             <h3 class="price-value">
-                {{quantidade}}
+                {{quantidade.length == 0 ? 'Nao informada' : quantidade}}
             </h3>
             
             <h2 class="price-field">
@@ -71,7 +71,7 @@
             },
             dataValidade : {
                 type : String,
-                required : true
+                required : false
 
             },
             isPerecivel : {
@@ -85,7 +85,7 @@
             },
             quantidade : {
                 type : String,
-                required : true
+                required : false
 
             },
             valorUnitario : {
@@ -137,13 +137,10 @@
             ArrayOfItens = ArrayOfItens.filter(field => field.id != props.id)
 
             if(ArrayOfItens.length == 0 ){
-                console.log("EUSOUGAY")
                 localStorage.removeItem('listOfItemsDesafioUnivali')
             } else {
                 localStorage.setItem('listOfItemsDesafioUnivali', JSON.stringify(ArrayOfItens))    
             }
-
-            console.log(ArrayOfItens)
             
             window.alert('Item excluido com sucesso')
 
@@ -220,7 +217,7 @@
 
     #quality-info
     {
-        width:10em;
+        width:11em;
         padding: 0;
         position: absolute;
     }

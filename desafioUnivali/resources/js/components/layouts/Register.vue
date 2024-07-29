@@ -139,13 +139,16 @@
             'moeda' : Currency.value,
             'valor' : Value.value,
             'isPerecivel' : isPerecivel.value,
-            'data_vencimento' : data_vencimento.value == null ? null : formatter.format(addDays(new Date(data_vencimento.value),1)),
-            'data_fabricacao' : data_fabricacao.value == null ? null : formatter.format(addDays(new Date(data_fabricacao.value),1))
+            'data_vencimento' : data_vencimento.value.length == 0 ? null : formatter.format(addDays(new Date(data_vencimento.value),1)),
+            'data_fabricacao' : data_fabricacao.value.length == 0 ? null : formatter.format(addDays(new Date(data_fabricacao.value),1))
         }
     }
 
     //Função que valida a quantidade baseado na unidade
     const validateQuantidade = (item) => {
+        if(item.quantidade.length == 0)
+            return true
+        
         //Quantidade não deve ter caracteres diferentes de números e virgulas, e no máximo 1 virgula
         if(!/^[0-9|,]+$/.test(item.quantidade) || item.quantidade.split(',').length > 2 ){
             window.alert('Quantidade deve apenas possuir numeros')
@@ -168,7 +171,6 @@
                 
             if(item.quantidade.includes(',')){
                 if(item.quantidade.split(',')[1].length > 3){
-                    console.log(item.quantidade)
                     window.alert('Quantidade deve ter no maximo 3 casas decimais')
                     return false
                 }
@@ -190,7 +192,7 @@
 
 
         //Verificações dos campos obrigatórios
-        if(item.name == null){
+        if(item.name.length == 0){
             window.alert('Nome do produto obrigatorio')
             return false
         }
@@ -198,7 +200,7 @@
             window.alert('Unidade do produto obrigatorio')
             return false
         }
-        if(item.valor == null){
+        if(item.valor.length == 0){
             window.alert('Valor do produto obrigatorio')
             return false
         }
@@ -229,16 +231,24 @@
         }
         
         //Verifica se a data de vencimento é menor que a atual
-        if(convertStringToDate(item.data_vencimento) < dataAtual){
-            window.alert('Item vencido')
-            return false
+        if(item.data_vencimento != null){
+            if(convertStringToDate(item.data_vencimento) < dataAtual){
+                window.alert('Item vencido')
+                return false
+            }
         }
 
-        //Verifica se a data de vencimento é menor que a data de fabricação, caso seja perecivel
-        if(convertStringToDate(item.data_vencimento) < convertStringToDate(item.data_fabricacao) && item.isPerecivel){
-            
-            window.alert('Item perecivel e com data de fabricacao maior que vencimento')
-            return false
+        if(item.data_vencimento != null){
+           //Verifica se a data de vencimento é menor que a data de fabricação, caso seja perecivel
+            if(convertStringToDate(item.data_vencimento) < convertStringToDate(item.data_fabricacao) && item.isPerecivel){
+                
+                window.alert('Item perecivel e com data de fabricacao maior que vencimento')
+                return false
+            }
+        }
+        //Verificar se valor do produto contem virgula. Se não, é menos que um real
+        if(item.valor.indexOf(',') == -1){
+            item.valor = (item.valor/100).toString().replace('.',',')
         }
 
         return true
@@ -252,7 +262,6 @@
 
         //Validar o item antes de salvar no localStorage
         if(validateItem(item)){
-            console.log(item)
             
             let ArrayOfItens = []
             let storedItens = localStorage.getItem('listOfItemsDesafioUnivali')
@@ -284,7 +293,6 @@
                 let listOfItens = JSON.parse(stringOfList)
 
                 let editItem = listOfItens.find(field => field.id == props.id)
-                console.log(editItem)
 
                 name.value = editItem.name
                 
@@ -294,7 +302,7 @@
 
                 isPerecivel.value = editItem.isPerecivel
 
-                data_vencimento.value = convertStringToDate(editItem.data_vencimento).toISOString().split('T')[0]
+                data_vencimento.value = editItem.data_vencimento == null ? null : convertStringToDate(editItem.data_vencimento).toISOString().split('T')[0]
                 data_fabricacao.value = convertStringToDate(editItem.data_fabricacao).toISOString().split('T')[0]
 
                 quantidade.value = editItem.quantidade.split(' ')[0]
@@ -330,7 +338,6 @@
         </div>
 
         <Field labelText="Quantidade" :placeHolderInput="placeholderQuantidade" v-model:value="quantidade" :complement="complementQuantidade"></Field>
-        {{ console.log(placeholderQuantidade) }}
 
         
         <CurrencyField labelTextCurrency="Moeda *" labelTextValue="Valor *" v-model:currency="Currency" v-model:value="Value"></CurrencyField>
