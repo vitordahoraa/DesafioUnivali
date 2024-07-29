@@ -23,7 +23,7 @@ php artisan key:generate
 
 php artisan migrate
 
-php artisan serve (
+php artisan serve
 
 --Em outro terminal, na pasta do projeto
 
