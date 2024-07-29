@@ -132,7 +132,7 @@
         const formatter = new Intl.DateTimeFormat('pt-br', {dateStyle: 'short'}); 
         return {
             //ID é um numero aleatório entre 0 e 10000, para não ter que implementar um sistema de identificação com localstorage
-            'id' : Math.floor(Math.random() * 99999),
+            'id' : props.id != null ? props.id : Math.floor(Math.random() * 99999),
             'name' : name.value,
             'unit' : selectedOption.value,
             'quantidade' : quantidade.value,
@@ -261,10 +261,16 @@
             {
                 ArrayOfItens = JSON.parse(storedItens)            
             }
-            ArrayOfItens.push(item)
+            if(props.id == null){
+                ArrayOfItens.push(item)
+                window.alert('Item adicionado com sucesso')
+            } else {
+                let index = ArrayOfItens.findIndex(field => field.id == props.id)
+                ArrayOfItens[index] = item
+                window.alert('Item editado com sucesso')
+            }
             localStorage.setItem('listOfItemsDesafioUnivali',JSON.stringify(ArrayOfItens))
 
-            window.alert('Item adicionado com sucesso')
             router.push('/')
         }
     }
@@ -288,9 +294,8 @@
 
                 isPerecivel.value = editItem.isPerecivel
 
-                data_vencimento.value = editItem.data_vencimento
-
-                data_fabricacao.value = editItem.data_fabricacao
+                data_vencimento.value = convertStringToDate(editItem.data_vencimento).toISOString().split('T')[0]
+                data_fabricacao.value = convertStringToDate(editItem.data_fabricacao).toISOString().split('T')[0]
 
                 quantidade.value = editItem.quantidade.split(' ')[0]
                 
@@ -321,7 +326,7 @@
 
         <div id="unit-field">
             <label id="unit-label" for="unit-input">Unidade *</label>
-            <DropDown id="dropdown-input" :options="options" v-model="selectedOption"/>
+            <DropDown id="dropdown-input" :options="options" v-model:value="selectedOption"/>
         </div>
 
         <Field labelText="Quantidade" :placeHolderInput="placeholderQuantidade" v-model:value="quantidade" :complement="complementQuantidade"></Field>
@@ -389,6 +394,8 @@
         height: 3rem;
         margin-top: 2rem;
         border-radius: 1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
     }
     #cancel-button
     {
@@ -399,6 +406,8 @@
         margin-top: 2rem;
         margin-left: 4rem;
         border-radius: 1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
     }
     #DateFields
     {

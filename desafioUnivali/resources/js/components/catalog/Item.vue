@@ -3,9 +3,10 @@
         <div id="header">
             <h1 id="nome-item">{{itemName.length > 15 ? itemName.substring(0,12).concat('...') : itemName}}</h1>
             <button @click="editItem" id="editar">Editar</button>
-            <button id="excluir">Excluir</button>
+            <button @click="deleteItem"id="excluir">Excluir</button>
 
         </div>
+        <hr />
 
         <div id="quality-info">
             <h2 class="quality-field">
@@ -107,7 +108,7 @@
         }
     )
 
-
+    // Ir para o componente Register, porém com o ID do item atual
     const editItem = () =>
     {
         router.push(
@@ -119,13 +120,42 @@
             }
         )
     } 
+    
+    const deleteItem = () =>
+    {
+        
+        var conf = window.confirm('Voce tem certeza que deseja excluir esse item?');
+        if(conf){
+            
+            let ArrayOfItens = []
+            let storedItens = localStorage.getItem('listOfItemsDesafioUnivali')
+            
+            if(storedItens != null)
+            {
+                ArrayOfItens = JSON.parse(storedItens)            
+            }
+            ArrayOfItens = ArrayOfItens.filter(field => field.id != props.id)
+
+            if(ArrayOfItens.length == 0 ){
+                console.log("EUSOUGAY")
+                localStorage.removeItem('listOfItemsDesafioUnivali')
+            } else {
+                localStorage.setItem('listOfItemsDesafioUnivali', JSON.stringify(ArrayOfItens))    
+            }
+
+            console.log(ArrayOfItens)
+            
+            window.alert('Item excluido com sucesso')
+
+            window.location.reload()
+        }
+    } 
 
 </script>
 
 <style scoped>
     #item-container 
     {
-        border: 1px red solid;
         background-color: #bcd3f5;
         border-radius: 1rem;
         padding: 1rem;
@@ -134,6 +164,16 @@
         display: block;
         height: 14rem;
         margin-bottom: 1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    #item-container:hover 
+    {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    hr 
+    {
+        margin:0;
     }
     #nome-item
     {

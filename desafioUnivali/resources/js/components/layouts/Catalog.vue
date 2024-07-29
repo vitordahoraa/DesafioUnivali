@@ -13,10 +13,10 @@
         <div id="header">
             <h1>Catalogo</h1>
             <h2>Lista com todos os itens salvos</h2>
+            <button id="add-item">Adicionar item</button>
         </div>
         <hr />
         <Item v-for="item in listOfItens" :key="item.id" :itemName="item.name" :dataValidade="item.data_vencimento" :isPerecivel="item.isPerecivel" :dataFabricacao="item.data_fabricacao" :quantidade="item.quantidade" :valorUnitario="item.valor" :moeda="item.moeda" :id="item.id"></Item>
-    
     
     </div>
 
@@ -37,6 +37,18 @@
     #header > h2 
     {
         font-weight: normal;
+    }
+    #add-item
+    {
+        background-color: #DFF2FF;
+        position: absolute;
+        width: 5rem;
+        height: 3rem;
+        border-radius: 1rem;
+        top:1rem;
+        right:1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
     }
 
 </style>

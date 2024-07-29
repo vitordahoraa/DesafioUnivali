@@ -2,7 +2,7 @@
     <div class="dropdown-wrapper">
         
         <div class="selected-option" @click=" isDropDownVisible = true" ref="dropdownElement">
-            {{ selectedOption || 'Selecione uma unidade de medida'}}
+            {{ selectedOption == null ? 'Selecione uma unidade de medida' : selectedOption}}
         </div>
     
         <Transition name="fade">
@@ -26,32 +26,31 @@
 </template>
 
 <script setup>
-    import {ref, defineProps, defineEmits, onMounted, onBeforeUnmount, watch} from 'vue';
+    import {ref, defineProps, watch, onMounted, onBeforeUnmount, defineModel} from 'vue';
 
+
+    const modelValue = defineModel('value')
 
     const props = defineProps(
         {
             options : {
                 type : Array,
                 required : true
-            },
-            modelValue : {
-                defaul : null
             }
         }
     )
-    watch(props.modelValue,() => {
-        selectedOption.value = props.modelValue.value
-    })
     const dropdownElement = ref(null)
-    const selectedOption = ref(null);
+    const selectedOption = ref(modelValue.value);
     const isDropDownVisible = ref(false);
 
-    const emit = defineEmits(['update:modelValue'])
+    watch(modelValue, () => {
+        selectedOption.value = modelValue.value
+    })
+
 
     const toogleOptionSelect = (option) => {
         selectedOption.value = option;
-        emit('update:modelValue',option);
+        modelValue.value = option;
         isDropDownVisible.value = false;
     }
 
