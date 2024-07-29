@@ -6,11 +6,20 @@ import Register from '../components/layouts/Register.vue'
 const routes = [
     {
         path : '/',
+        name : 'catalog',
         component : Catalog,
     },
     {
         path : '/register',
+        name : 'register',
         component : Register
+    },
+    
+    {
+        path : '/register/:id',
+        name : 'registerID',
+        component : Register,
+        props : true
     }
 ]
 

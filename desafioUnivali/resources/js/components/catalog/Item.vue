@@ -1,8 +1,8 @@
 <template>
     <div id="item-container">
         <div id="header">
-            <h1 id="nome-item">{{name.length > 15 ? name.substring(0,12).concat('...') : name}}</h1>
-            <button id="editar">Editar</button>
+            <h1 id="nome-item">{{itemName.length > 15 ? itemName.substring(0,12).concat('...') : itemName}}</h1>
+            <button @click="editItem" id="editar">Editar</button>
             <button id="excluir">Excluir</button>
 
         </div>
@@ -19,7 +19,7 @@
                 Produto Perecivel?
             </h2>
             <h3 class="quality-value">
-                {{isPericivel ? 'Sim' : 'Nao'}}
+                {{isPerecivel ? 'Sim' : 'Nao'}}
             </h3>
             
             <h2 class="quality-field">
@@ -59,10 +59,12 @@
 
 <script setup>
     import {ref, defineProps} from 'vue';
+    import { useRouter } from 'vue-router';
+    const router = useRouter();
 
     const props = defineProps(
         {
-            name : {
+            itemName : {
                 type : String,
                 required : true
             },
@@ -71,7 +73,7 @@
                 required : true
 
             },
-            isPericivel : {
+            isPerecivel : {
                 type : Boolean,
                 required : true
             },
@@ -105,9 +107,17 @@
         }
     )
 
+
     const editItem = () =>
     {
-        
+        router.push(
+            {
+                name : 'registerID', 
+                params:{
+                    id : props.id
+                }
+            }
+        )
     } 
 
 </script>

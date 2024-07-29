@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-    import {ref, defineProps, defineEmits, onMounted, onBeforeUnmount} from 'vue';
+    import {ref, defineProps, defineEmits, onMounted, onBeforeUnmount, watch} from 'vue';
 
 
     const props = defineProps(
@@ -40,6 +40,9 @@
             }
         }
     )
+    watch(props.modelValue,() => {
+        selectedOption.value = props.modelValue.value
+    })
     const dropdownElement = ref(null)
     const selectedOption = ref(null);
     const isDropDownVisible = ref(false);

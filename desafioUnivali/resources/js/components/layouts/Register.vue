@@ -1,7 +1,7 @@
 <script setup>
 
     //importação das libs e dos componentes
-    import {ref, watch,defineProps} from 'vue'
+    import {ref, watch,defineProps,onMounted} from 'vue'
     import Field from "../item/TextField.vue"
     import CurrencyField from "../item/CurrencyField.vue"
     import DropDown from "../item/Dropdown.vue"
@@ -9,7 +9,9 @@
     import DateField from "../item/DateField.vue"
     import { useRouter } from 'vue-router';
     
+    
     const props = defineProps({
+            /*
             prop_name : {
                 type : String,
                 required : false
@@ -22,6 +24,7 @@
             },
             prop_isPericivel : {
                 type : Boolean,
+                default : false,
                 required : false
             },
             prop_dataFabricacao : {
@@ -45,13 +48,15 @@
                 required : false
 
             },
-            prop_id : {
-                type : Number,
+            */
+            id : {
+                type : String,
                 required : false
 
             }
             
     })
+
 
     //Definição das constantes utilizadas
     const router = useRouter()
@@ -61,23 +66,25 @@
     
     const selectedOption = ref(null)
 
-    const Currency = ref(props.prop_moeda)
+    const Currency = ref('BRL')
 
-    const Value = ref(props.prop_valorUnitario)
+    const Value = ref('')
 
-    const isPerecivel = ref(props.prop_isPericivel) 
+    const isPerecivel = ref('') 
 
-    const data_vencimento = ref(props.prop_dataValidade)
+    const data_vencimento = ref('')
 
-    const data_fabricacao = ref(props.prop_dataFabricacao)
+    const data_fabricacao = ref('')
 
     const placeholderQuantidade = ref('')
     
     const complementQuantidade = ref('')
     
-    const name = ref(props.prop_name)
+    const name = ref('')
 
-    const quantidade = ref(props.prop_quantidade)
+    const quantidade = ref('')
+    
+    const id = ref('')
 
 
 
@@ -261,6 +268,38 @@
             router.push('/')
         }
     }
+
+    
+    //Verifica se a chamada do component passou algum ID via params
+    onMounted(() => {
+        if(props.id != null){
+            let stringOfList = localStorage.getItem('listOfItemsDesafioUnivali')
+            if(stringOfList != null){
+                let listOfItens = JSON.parse(stringOfList)
+
+                let editItem = listOfItens.find(field => field.id == props.id)
+                console.log(editItem)
+
+                name.value = editItem.name
+                
+                Currency.value = editItem.moeda
+
+                Value.value = editItem.valor
+
+                isPerecivel.value = editItem.isPerecivel
+
+                data_vencimento.value = editItem.data_vencimento
+
+                data_fabricacao.value = editItem.data_fabricacao
+
+                quantidade.value = editItem.quantidade.split(' ')[0]
+                
+                selectedOption.value = editItem.unit
+                
+            }
+        }
+    }
+)
 
 </script>
 

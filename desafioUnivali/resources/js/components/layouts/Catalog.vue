@@ -15,7 +15,7 @@
             <h2>Lista com todos os itens salvos</h2>
         </div>
         <hr />
-        <Item v-for="item in listOfItens" :key="item.id" :name="item.name" :dataValidade="item.data_vencimento" :isPerecivel="item.isPerecivel" :dataFabricacao="item.data_fabricacao" :quantidade="item.quantidade" :valorUnitario="item.valor" :moeda="item.moeda"></Item>
+        <Item v-for="item in listOfItens" :key="item.id" :itemName="item.name" :dataValidade="item.data_vencimento" :isPerecivel="item.isPerecivel" :dataFabricacao="item.data_fabricacao" :quantidade="item.quantidade" :valorUnitario="item.valor" :moeda="item.moeda" :id="item.id"></Item>
     
     
     </div>
